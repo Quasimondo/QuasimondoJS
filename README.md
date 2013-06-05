@@ -8,6 +8,9 @@ Various Blurs:
 Stack Blur (best quality/speed ratio):
 http://www.quasimondo.com/StackBlurForCanvas/StackBlurDemo.html
 
+An explanation how the Stackblur Algorithm works can be found here:
+https://github.com/Quasimondo/QuasimondoJS/blob/master/blur/stackblur.pdf?raw=true
+
 Compound Blur with variable radii:
 http://www.quasimondo.com/CompoundBlurForCanvas/CompoundBlurDemo.html
 
