@@ -76,14 +76,14 @@ var shg_table = [
 		24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24,
 		24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24 ];
 
-function stackBlurImage( imageID, canvasID, radius, blurAlphaChannel )
+function stackBlurImage( imageIDOrElement, canvasIDOrElement, radius, blurAlphaChannel )
 {
 			
- 	var img = document.getElementById( imageID );
+	var img = stackBlurGetElement( imageIDOrElement );
 	var w = img.naturalWidth;
-    var h = img.naturalHeight;
+	var h = img.naturalHeight;
        
-	var canvas = document.getElementById( canvasID );
+	var canvas = stackBlurGetElement( canvasIDOrElement );
       
     canvas.style.width  = w + "px";
     canvas.style.height = h + "px";
@@ -97,18 +97,18 @@ function stackBlurImage( imageID, canvasID, radius, blurAlphaChannel )
 	if ( isNaN(radius) || radius < 1 ) return;
 	
 	if ( blurAlphaChannel )
-		stackBlurCanvasRGBA( canvasID, 0, 0, w, h, radius );
+		stackBlurCanvasRGBA( canvasIDOrElement, 0, 0, w, h, radius );
 	else 
-		stackBlurCanvasRGB( canvasID, 0, 0, w, h, radius );
+		stackBlurCanvasRGB( canvasIDOrElement, 0, 0, w, h, radius );
 }
 
 
-function stackBlurCanvasRGBA( id, top_x, top_y, width, height, radius )
+function stackBlurCanvasRGBA( canvasIDOrElement, top_x, top_y, width, height, radius )
 {
 	if ( isNaN(radius) || radius < 1 ) return;
 	radius |= 0;
 	
-	var canvas  = document.getElementById( id );
+	var canvas  = stackBlurGetElement( canvasIDOrElement );
 	var context = canvas.getContext("2d");
 	var imageData;
 	
@@ -370,12 +370,12 @@ function stackBlurCanvasRGBA( id, top_x, top_y, width, height, radius )
 }
 
 
-function stackBlurCanvasRGB( id, top_x, top_y, width, height, radius )
+function stackBlurCanvasRGB( canvasIDOrElement, top_x, top_y, width, height, radius )
 {
 	if ( isNaN(radius) || radius < 1 ) return;
 	radius |= 0;
 	
-	var canvas  = document.getElementById( id );
+	var canvas  = stackBlurGetElement( canvasIDOrElement );
 	var context = canvas.getContext("2d");
 	var imageData;
 	
@@ -608,4 +608,12 @@ function BlurStack()
 	this.b = 0;
 	this.a = 0;
 	this.next = null;
+}
+
+function stackBlurGetElement( elementOrID )
+{
+	if ( elementOrID.nodeType == 1 )
+		return elementOrID;
+
+	return document.getElementById( elementOrID );
 }
