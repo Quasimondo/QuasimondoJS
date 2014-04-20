@@ -2,7 +2,7 @@
 
 StackBlur - a fast almost Gaussian Blur For Canvas
 
-Version: 	0.5
+Version: 	0.6
 Author:		Mario Klingemann
 Contact: 	mario@quasimondo.com
 Website:	http://www.quasimondo.com/StackBlurForCanvas
@@ -210,16 +210,10 @@ function stackBlurCanvasRGBA( canvasIDOrElement, top_x, top_y, width, height, ra
 		stackOut = stackEnd;
 		for ( x = 0; x < width; x++ )
 		{
-			pixels[yi+3] = pa = (a_sum * mul_sum) >> shg_sum;
-			if ( pa != 0 )
-			{
-				pa = 255 / pa;
-				pixels[yi]   = ((r_sum * mul_sum) >> shg_sum) * pa;
-				pixels[yi+1] = ((g_sum * mul_sum) >> shg_sum) * pa;
-				pixels[yi+2] = ((b_sum * mul_sum) >> shg_sum) * pa;
-			} else {
-				pixels[yi] = pixels[yi+1] = pixels[yi+2] = 0;
-			}
+			pixels[yi]   = (r_sum * mul_sum) >> shg_sum;
+			pixels[yi+1] = (g_sum * mul_sum) >> shg_sum;
+			pixels[yi+2] = (b_sum * mul_sum) >> shg_sum;
+			pixels[yi+3] = (a_sum * mul_sum) >> shg_sum;
 			
 			r_sum -= r_out_sum;
 			g_sum -= g_out_sum;
