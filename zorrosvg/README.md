@@ -1,4 +1,4 @@
-QuasimondoSVG
+ZorroSVG
 ============
 
 The source code for: http://quasimondo.com/ZorroSVG/
