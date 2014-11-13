@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<!--[if IE 8]> 				 <html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+
+<head>
+  <meta charset="utf-8">
+  <title>ZorroSVG - Put a Mask on it</title>
+  
+  <meta name="viewport" content="width=device-width,initial-scale=0.62">
+  <meta name="description" content="ZorroSVG - The transparency of PNGs for the file size of JPEGs">
+  <meta property="og:image" content="http://www.quasimondo.com/ZorroSVG/img/zorrosvg.jpg"/>
+  <meta property="og:description" content="ZorroSVG - Put a Mask on it. The transparency of PNGs for the file size of JPEGs."/>
+  <meta name="twitter:image" content="http://www.quasimondo.com/ZorroSVG/img/zorrosvg.jpg">
+  
+  <link rel="shortcut icon" href="favico.ico" />
+  <link rel="image_src" href="/img/zorrosvg.jpg" / >
+  <link href='http://fonts.googleapis.com/css?family=Oswald:300' rel='stylesheet' type='text/css'>
+  <link href="css/ui-darkness/jquery-ui-1.10.3.custom.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/foundation.css">
+  <link rel="author" href="https://plus.google.com/+MarioKlingemann"/>
+   <script src="js/jquery-1.9.1.js"></script>
+  <script src="js/jquery-ui-1.10.3.custom.min.js"></script>
+  <script src="js/zorrosvgmaskmaker.js"></script>
+   <script src="js/FileSaver.min.js"></script>
+</head>
+<body>
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=125930824160337&version=v2.0";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
+
+	<div class="row" style="padding-top:1em">
+		<div class="large-8 columns" style="padding-top:8.2em">
+			<h1>ZorroSVG - Put a Mask on it</h1>
+			<p>The transparency of PNGs for the file size of JPEGs</p>
+			<hr />
+		</div>
+		<div class="large-4 columns">
+			<img src="img/zorro2.svg" width="80%"/>
+		</div>
+	</div>
+
+	<div class="row" style="padding-top:1em">
+		<div class="large-8 columns">
+			<div class="row">
+				<div class="large-12 columns">
+					<div class="panel">
+						<h2>Try it</h2>
+						<p>Drag a transparent PNG or GIF from your desktop onto this page or use the file picker
+						and see how many kB ZorroSVG can save you.</p>
+						<input type="file" id="files" name="files[]"/>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="large-12 columns">
+					
+					<div class="panel" id="drop" style="background:url(img/transparentpattern.gif) repeat 0 0;text-align:center;">
+						<img src="img/example.png" id="example" onload="onExampleLoaded(this)">
+					</div>
+					<div style="padding:4px;background:#484038;color:#fff;position:relative;top:-30px;" id="originalSize">Original Transparent PNG</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="large-12 columns">
+					<div class="panel" id="compressed" style="background:url(img/transparentpattern.gif) repeat 0 0;text-align:center;">
+					</div>
+					<div style="padding:4px;background:#484038;color:#fff;position:relative;top:-30px;" id="zorroSize">ZorroSVG (live rendered)</div>
+					<div class="panel">
+						<span>Change JPEG Compression Quality here to find the optimum quality/size ratio:</span><div id="qualitySlider" style="margin-top:20px;margin-bottom:20px;"></div>
+						<p id="compressedStatus" style="line-height: 1.3em;"></p>
+						
+						<p>Images created with ZorroSVG can be used like any other image. Simply embed the transparent bitmap in your html like this:</p>
+						<div class="panel" style=" border-color:#A5A51B; background-color:#FCFCC0;"><pre><code>&lt;img src="yourImage.svg" /&gt;</code></pre></div>
+						<p>If you want to be on the safe side you can add a fallback which will display the old png in case the browser does not support SVG. Your html tag would look like this:</p>
+						<div class="panel" style=" border-color:#A5A51B; background-color:#FCFCC0;"><pre><code>&lt;img src="yourImage.svg" onerror="this.src='yourOriginal.png'"/&gt;</code></pre></div>
+						<p>And if you really care about users that still use mobile-Safari on iOS 7 you will have to use an object tag instead of the img tag:</p>
+						<div class="panel" style=" border-color:#A5A51B; background-color:#FCFCC0;"><pre><code>&lt;object data="yourImage.svg" type="image/svg+xml"/&gt;</code></pre></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="large-12 columns">
+					<div class="panel">
+						<h2>The small print</h2>
+						<p>ZorroSVG has some minor pitfalls you should be a aware of:
+						<ul style="padding-left:10px;">
+						<li>It only runs on browsers that support SVG 1.1 - <a href="http://caniuse.com/#feat=svg">which all the latest browsers do</a>.
+						<li>Right now there are some subtle brightness differences in semi-transparent areas (maybe you can spot them in the example image's soft shadow). They might be gamma or color-profile related and I am still trying to improve on this.
+						<li>Some (older) servers do not serve the correct response headers for SVG files. In that case you have to add a .htaccess file to your image folder which contains the line:<pre>AddType image/svg+xml .svg .svgz</pre>
+						<li>There are cases where the size of the original PNG is actually smaller than the SVG version. That is usually the case with images that have large monochrome areas or certain types of linear gradients. In these cases PNG can use some very efficient compression methods that are better suited than JPEG. Well, you can't win all the time.
+						<li>Before somebody points it out: I am not a big fan of the base64 encoding that I have to use to embed the JPEG inside the SVG since it increases the size of the data by a factor of 1.37. For that reason I originally had allowed the option to save the JPEG as a separate file which gets loaded automatically by the SVG code. The problem was that the handling of relative image paths inside of SVGs does not seem to be consistent across browsers. But feel free to check out the Javascript of this page - the code to generate a two map version is still there.
+						<li>Right now this map creation tool does not work on Internet Explorer (something weird with jQuery I still have to figure out - any pointers how to fix it are more than welcome).
+						<li>The SVG file download does not seem to work in Safari. Well, this can fortunately be avoided by using a proper browser instead.
+						</ul></p>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="large-12 columns">
+					<div class="panel" style="background:url(img/transparentpattern.png) repeat 0 0;text-align:center;">
+						<h3 style="text-align:left;">A few more examples:</h3>
+					<object type="image/svg+xml" data="img/example1.svg"></object>
+					<object type="image/svg+xml" data="img/example2.svg"></object>
+					<object type="image/svg+xml" data="img/example3.svg"></object>
+					<object type="image/svg+xml" data="img/example4.svg"></object>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="large-12 columns">
+					<div class="panel">
+						<h3>Version History</h3>
+						<p>v1.0
+						<ul style="padding-left:10px;">
+						<li>Initial Release
+						</ul>
+						</p>
+						<p>v1.1
+						<ul style="padding-left:10px;">
+						<li>Applying gamma correction to the alpha mask to correct opacity differences between the original PNG and the SVG
+						</ul>
+						</p>
+						<p>v1.2
+						<ul style="padding-left:10px;">
+						<li>Removed the gamma correction code for iPad and iPhone - it looks like the behaviour of the semi-transparent pixels is platform specific - any feedback on browsers that still show different results for the PNG and the SVG is more than welcome.
+						</ul>
+						</p>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+
+		<div class="large-4 columns">
+			<p>Transparent PNGs are great, but they come at a price: file size. Wouldn't it be nice if there were transparent JPEGs instead? Unfortunately there is no such thing, but ZorroSVG gives you the power of transparent PNGs for the size of a JPEG.</p>
+			<p>It achieves this by converting your PNG to an SVG which uses the compositing capabilites of SVG to create a masked bitmap on-the-fly using JPEGs for both the image and its mask - achieving most of the time a much better compression than PNG. Since all the compositing and masking happens inside the SVG there is no JavaScript required. <a href="http://caniuse.com/#feat=svg">And it will work on any current browser.</a></p> 
+			<p>The SVGs created by ZorroSVG can be used like any other image by simply using the &lt;img&gt; tag to embed it into your page.</p>
+			<p>The tool on this page helps you to convert your current PNGs to the ZorroSVG image format. Give it a try!</p>
+			<ul>
+			<li>Written by <a href="http://mario-klingemann.tumblr.com">Mario Klingemann</a>
+			<li>Follow me on Twitter: <a href="http://twitter.com/quasimondo">@Quasimondo</a>
+			<li>Logo Design by <a href="http://lukaschewitz.de/">Alexandra Lukaschewitz</a>
+			</ul>
+			<hr/>
+		<a href="https://twitter.com/share" class="twitter-share-button" data-via="quasimondo">Tweet</a>
+		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+		<div class="fb-like" data-href="http://quasimondo.com/ZorroSVG/" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+		<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+		<hr/>
+		<g:plusone></g:plusone>
+		<script id='fbmfvk5'>(function(i){var f,s=document.getElementById(i);f=document.createElement('iframe');f.src='//api.flattr.com/button/view/?uid=Quasimondo&button=compact&url='+encodeURIComponent(document.URL);f.title='Flattr';f.height=20;f.width=110;f.style.borderWidth=0;s.parentNode.insertBefore(f,s);})('fbmfvk5');</script>	
+	<hr/>
+	</div>
+	</div>
+
+  <script>
+  document.write('<script src=' +
+  ('__proto__' in {} ? 'js/vendor/zepto' : 'js/vendor/jquery') +
+  '.js><\/script>')
+  </script>
+  
+  <script src="js/foundation.min.js"></script>
+  <script src="js/vendor/custom.modernizr.js"></script>
+
+  <script>
+    $(document).foundation();
+  </script>
+</body>
+</html>
