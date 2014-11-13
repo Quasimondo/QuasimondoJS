@@ -3,6 +3,11 @@ QuasimondoJS
 
 A collection of more or less useful Javascript utils and snippets
 
+ZorroSVG - Put a Mask on it.
+
+Converts transparent PNGs to SVGs and can shrink file sizes considerably.
+http://quasimondo.com/ZorroSVG/
+
 Various Blurs:
 
 Stack Blur (best quality/speed ratio):
