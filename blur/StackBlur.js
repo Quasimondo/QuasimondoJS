@@ -105,9 +105,6 @@ function stackBlurImage( imageIDOrElement, canvasIDOrElement, radius, blurAlphaC
 
 function stackBlurCanvasRGBA( canvasIDOrElement, top_x, top_y, width, height, radius )
 {
-	if ( isNaN(radius) || radius < 1 ) return;
-	radius |= 0;
-	
 	var canvas  = stackBlurGetElement( canvasIDOrElement );
 	var context = canvas.getContext("2d");
 	var imageData;
@@ -133,6 +130,16 @@ function stackBlurCanvasRGBA( canvasIDOrElement, top_x, top_y, width, height, ra
 	  alert("Cannot access image");
 	  throw new Error("unable to access image data: " + e);
 	}
+  
+  imageData = stackBlurImageDataRGBA( imageData, radius );
+  context.putImageData( imageData, top_x, top_y )
+}
+
+
+function stackBlurImageDataRGBA( imageData, radius )
+{
+	if ( isNaN(radius) || radius < 1 ) return;
+	radius |= 0;
 			
 	var pixels = imageData.data;
 			
@@ -359,7 +366,7 @@ function stackBlurCanvasRGBA( canvasIDOrElement, top_x, top_y, width, height, ra
 		}
 	}
 	
-	context.putImageData( imageData, top_x, top_y );
+	return imageData;
 	
 }
 
