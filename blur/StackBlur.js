@@ -142,6 +142,8 @@ function stackBlurImageDataRGBA( imageData, radius )
 	radius |= 0;
 			
 	var pixels = imageData.data;
+  var width = imageData.width;
+  var height = imageData.height;
 			
 	var x, y, i, p, yp, yi, yw, r_sum, g_sum, b_sum, a_sum, 
 	r_out_sum, g_out_sum, b_out_sum, a_out_sum,
